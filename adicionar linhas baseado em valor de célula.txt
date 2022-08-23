@@ -1,0 +1,30 @@
+sub addLinhas()
+
+	Dim row as Long
+	Dim finalRow as Long
+	Dim qtde As Integer
+	Dim x As Long
+	Dim y As Long
+
+	finalRow = Sheets("Boards").Range("E" &  Rows.Count).End(xlUp).row
+	
+	'Tabela com header
+	For x=2 to finalRow
+		finalRow = Sheets("Boards").Range("E" &  Rows.Count).End(xlUp).row
+		qtde = Sheets("Boards").Cells(x,5).Value 'Coluna E com a info de qtde a ser multiplicada
+		Rows(x).Select
+		Selection.Copy
+		
+		For y=1 To qtde
+			Range("A"&x).Select
+			Selection.End(xlDown).Select
+			Cells(finalRow + y, 1).Select
+			ActiveSheet.Paste
+			Cells(finalRow + y, 5) = 1 'Deixar como valor unitário
+			Cells(finalRow + y, 19) = "'" & y & "/" & qtde 'para fazer contagem 1/x
+		Next y
+	Next x
+
+
+
+End Sub
